@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.algoridang">
+    package="com.SWM.algoridang">
    <application
         android:label="algoridang"
         android:icon="@mipmap/ic_launcher">
