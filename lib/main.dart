@@ -10,6 +10,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 //build test
 //flutter build apk --release --target-platform=android-arm64 --no-sound-null-safety
+//flutter build appbundle --release --target-platform=android-arm64 --no-sound-null-safety
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
