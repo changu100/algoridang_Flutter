@@ -33,13 +33,15 @@ class WebViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
 
-    return Scaffold(
-        body: Container(
-      margin: EdgeInsets.only(top: statusBarHeight),
-      child: WebView(
-        initialUrl: "https://www.algoridang.com/",
-        javascriptMode: JavascriptMode.unrestricted,
-      ),
-    ));
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+            body: Container(
+          margin: EdgeInsets.only(top: statusBarHeight),
+          child: WebView(
+            initialUrl: "https://www.algoridang.com/takers/ticker-search",
+            javascriptMode: JavascriptMode.unrestricted,
+          ),
+        )));
   }
 }
