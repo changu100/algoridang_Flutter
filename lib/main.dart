@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -29,19 +32,39 @@ class MyApp extends StatelessWidget {
 }
 
 class WebViewPage extends StatelessWidget {
+  WebViewController? _webViewController;
+  final Completer<WebViewController> _completerController =
+      Completer<WebViewController>();
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
 
     return WillPopScope(
-        onWillPop: () async => false,
+        onWillPop: () async => _goBack(context),
         child: Scaffold(
             body: Container(
           margin: EdgeInsets.only(top: statusBarHeight),
           child: WebView(
+            onWebViewCreated: (WebViewController webViewController) {
+              _completerController.future
+                  .then((value) => _webViewController = value);
+              _completerController.complete(webViewController);
+            },
             initialUrl: "https://www.algoridang.com/takers/ticker-search",
             javascriptMode: JavascriptMode.unrestricted,
           ),
         )));
+  }
+
+  Future<bool> _goBack(BuildContext context) async {
+    if (_webViewController == null) {
+      return true;
+    }
+    if (await _webViewController!.canGoBack()) {
+      _webViewController!.goBack();
+      return Future.value(false);
+    } else {
+      return Future.value(true);
+    }
   }
 }
